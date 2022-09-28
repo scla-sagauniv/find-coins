@@ -22,8 +22,8 @@ const Login=()=> {
           await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
           console.log(loginEmail,loginPassword)
           router.push({
-            pathname: "/worldMap",
-            query: { user_email:loginEmail } // ココ
+            pathname: "/test"
+            // query: { user_email:loginEmail } // ココ
           });
           
 
@@ -31,32 +31,24 @@ const Login=()=> {
           console.log(error)
         }
       };
-
-      const handleClick = () =>{
-        router.push({
-          pathname: "/register"
-          
-        });
-      }
   
     return (
 
         <>
-        <h1>トップページ</h1>
+        <h1>Googleログイン</h1>
 
         <form onClick={handleSubmit}>
-          <div className={styles.container}>
-    
+            <div className={styles.container}>
+            
             <input type="email" onChange={(e) => setLoginEmail(e.target.value)}/>
             <input type="password" onChange={(e) => setLoginPassword(e.target.value)}/>
-            
-          </div>
+            <button type="submit">送信</button>
+            </div>
         </form>
-
-        <button type="submit">送信</button>
-        <button type='button' onClick={handleClick}>新規登録</button>
       </>
     )
   }
 
 export default Login;
+
+
