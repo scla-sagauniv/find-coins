@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Script from "next/script";
 import Coin  from "../components/Coin"
+import Head from "next/head";
 
 export const WorldMap = () => {
   const [showcoin, setShowCoin] = useState(false);
@@ -45,10 +46,6 @@ export const WorldMap = () => {
 
   return (
     <>
-      <Script
-        src="https://www.google.com/jsapi"
-        strategy="beforeInteractive"
-      ></Script>
       <div id="chart_div" style={{ width: "900px", height: "500px" }}></div>
       <Coin showcoin={showcoin}  setShowCoin={setShowCoin} country={country}/>
     </>
