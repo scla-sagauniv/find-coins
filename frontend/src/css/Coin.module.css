@@ -1,0 +1,37 @@
+.batsu{
+    font-size: 180%;/*ボタンの大きさ*/
+    text-align: center;
+    background-color: white;
+    border-radius: 50%;
+    font-weight: bold;
+    border: 2px solid black;
+    color: black;
+  
+  
+    position: absolute;
+      right: -27px;
+      top: -27px;
+  
+  
+  
+    border-radius: 100%;
+    width: 54px;
+    height:54px;
+  }
+    
+.batsu:hover{
+    background-color:green;
+    border-color: black;
+    color: #FFF;
+  }
+
+.coinRegister{
+  font-size: 25px;
+}
+
+.coinRegister:hover{
+    background-color:green;
+    border-color: black;
+    color: #FFF;
+    
+  }
