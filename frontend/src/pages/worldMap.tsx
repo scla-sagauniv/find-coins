@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useId } from "react";
 import Script from "next/script";
 import Coin  from "../components/Coin"
 import style from "../styles/worldMap.module.css"
+import Head from "next/head";
+import firebaseApp from "../firebase/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const WorldMap = () => {
   const [showcoin, setShowCoin] = useState(false);
@@ -9,6 +12,21 @@ export const WorldMap = () => {
   const [countryData, setCountryData] = useState([["Country"]]);
   const [gatherPoint, setGatherPoint] = useState(0);
 
+  const auth = getAuth(firebaseApp);
+
+  const user = auth.currentUser;
+  if (user !== null) {
+    // The user object has basic properties such as display name, email, etc.
+    // The user's ID, unique to the Firebase project. Do NOT use
+    // this value to authenticate with your backend server, if
+    // you have one. Use User.getToken() instead.
+    
+    //ユーザのuidを取得する
+    const uid = user.uid;
+    console.log(uid);
+    
+  }
+  
   useEffect(() => {
     google.load("visualization", "1", { packages: ["geochart"] });
     google.setOnLoadCallback(drawRegionsMap);
@@ -64,13 +82,17 @@ export const WorldMap = () => {
     }
   }
  
+  if (user==null){
+    return <></>
+  }
   return (
     <>
     <div>集めたコインの数：{gatherPoint} / 196
     </div>
       <div className={style.worldMap} id="chart_div" style={{ width: "900px", height: "500px" }}></div>
-      <Coin showcoin={showcoin}  setShowCoin={setShowCoin} country={country} colorCodingCountry={colorCodingCountry} countryData={countryData} />
+      <Coin showcoin={showcoin}  setShowCoin={setShowCoin} country={country} colorCodingCountry={colorCodingCountry} countryData={countryData} userid={user.uid}/>
     </>
   );
 };
+
 export default WorldMap;
