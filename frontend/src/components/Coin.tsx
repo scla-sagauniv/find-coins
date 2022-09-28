@@ -1,15 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
+import style from "../styles/Coin.module.css";
 
 const Coin = (props: any) => {
-  // const showCoin = () =>{
-  //   props.setShowCoin(true);
-  // }
-  const closeCoin = () => {
-    props.setShowCoin(false);
-  };
-
   const overlay = {
     position: "fixed",
     top: 0,
@@ -28,6 +22,17 @@ const Coin = (props: any) => {
     borderRadius: "3px",
   };
 
+  const closeCoin = () => {
+    props.setShowCoin(false);
+  };
+
+  const addCountry = () => {
+    props.colorCodingCountry();
+    closeCoin();
+  };
+
+  props.countryData.find((data: any) => data[0] === props.country);
+
   return (
     <>
       {props.showcoin ? ( // showFlagがtrueだったらModalを表示する
@@ -41,7 +46,46 @@ const Coin = (props: any) => {
                 height="300px"
               />
             </div>
-            <button onClick={closeCoin}>閉じる</button>
+            <div className={style.closeModal} onClick={closeCoin}></div>
+            {props.countryData.find(
+              (data: any) => data[0] === props.country
+            ) ? (
+              <>
+                <input
+                  id="hasNotCoin"
+                  type="radio"
+                  name="hasCoinChecked"
+                  onClick={addCountry}
+                />
+                <label for="hasNotCoin">持ってない</label>
+                <input
+                  id="hasCoin"
+                  type="radio"
+                  name="hasCoinChecked"
+                  defaultChecked
+                  onClick={addCountry}
+                />
+                <label for="hasCoin">持ってる</label>
+              </>
+            ) : (
+              <>
+                <input
+                  id="hasNotCoin"
+                  type="radio"
+                  name="hasCoinChecked"
+                  defaultChecked
+                  onClick={addCountry}
+                />
+                <label for="hasNotCoin">持ってない</label>
+                <input
+                  id="hasCoin"
+                  type="radio"
+                  name="hasCoinChecked"
+                  onClick={addCountry}
+                />
+                <label for="hasCoin">持ってる</label>
+              </>
+            )}
           </div>
         </div>
       ) : (
