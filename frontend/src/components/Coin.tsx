@@ -1,14 +1,31 @@
 import Head from "next/head";
 import Image from "next/image";
+import React from 'react';
 import { useState } from "react";
+import styles from '../css/Coin.module.css'
+import { useForm } from 'react-hook-form';
+import { collection, addDoc,setDoc,doc } from "firebase/firestore";
+import {db} from '../firebase/firebase';
 
 const Coin = (props: any) => {
-  // const showCoin = () =>{
-  //   props.setShowCoin(true);
-  // }
+
+  console.log(props);
+
+  const { register, handleSubmit } = useForm();
+  
   const closeCoin = () => {
     props.setShowCoin(false);
   };
+
+
+  const dataRegister =(data:any)=>{
+
+  }
+
+  function submit(data:any) {
+    console.log(data)
+  }
+ 
 
   const overlay = {
     position: "fixed",
@@ -23,8 +40,9 @@ const Coin = (props: any) => {
   };
 
   const modalContent = {
+    position: "relative",
     background: "white",
-    padding: "10px",
+    padding: "20px",
     borderRadius: "3px",
   };
 
@@ -33,7 +51,11 @@ const Coin = (props: any) => {
       {props.showcoin ? ( // showFlagがtrueだったらModalを表示する
         <div style={overlay}>
           <div style={modalContent}>
+          
             <div id="contents_block">
+            <div className={styles.batsu} onClick={closeCoin} >
+              ×
+            </div>
               <Image
                 id="countryImg"
                 src={`/../public/img/${props.country}.jpg`}
@@ -41,7 +63,14 @@ const Coin = (props: any) => {
                 height="300px"
               />
             </div>
-            <button onClick={closeCoin}>閉じる</button>
+
+            <form onSubmit={handleSubmit(submit)}>
+              <input type="text" {...register('test')} />
+              <button type="submit">送信</button>
+            </form>
+           
+            
+            <button className={styles.coinRegister} onClick={closeCoin}>登録</button>
           </div>
         </div>
       ) : (
