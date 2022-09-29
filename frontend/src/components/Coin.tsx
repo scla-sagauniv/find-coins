@@ -57,7 +57,7 @@ const Coin = (props: any) => {
       {props.showcoin ? ( // showFlagがtrueだったらModalを表示する
         <div style={overlay}>
           <div style={modalContent}>
-          
+          <div className={style.countryName}>{props.country}</div>
             <div id="contents_block">
             <div className={styles.batsu} onClick={closeCoin} >
               ×
@@ -73,13 +73,16 @@ const Coin = (props: any) => {
               (data: any) => data[0] === props.country
             ) ? (
               <>
+              <div id="radio">
                 <input
                   id="hasNotCoin"
                   type="radio"
                   name="hasCoinChecked"
                   onClick={addCountry}
                 />
-                <label for="hasNotCoin">持ってない</label>
+                <label htmlFor="hasNotCoin">持ってない</label>
+              </div>
+              <div id="radio">
                 <input
                   id="hasCoin"
                   type="radio"
@@ -87,10 +90,12 @@ const Coin = (props: any) => {
                   defaultChecked
                   onClick={addCountry}
                 />
-                <label for="hasCoin">持ってる</label>
+                <label htmlFor="hasCoin">持ってる</label>
+              </div>
               </>
             ) : (
               <>
+              <div id="radio">
                 <input
                   id="hasNotCoin"
                   type="radio"
@@ -98,25 +103,28 @@ const Coin = (props: any) => {
                   defaultChecked
                   onClick={addCountry}
                 />
-                <label for="hasNotCoin">持ってない</label>
+                <label htmlFor="hasNotCoin">持ってない</label>
+              </div>
+              <div id="radio">
                 <input
                   id="hasCoin"
                   type="radio"
                   name="hasCoinChecked"
                   onClick={addCountry}
                 />
-                <label for="hasCoin">持ってる</label>
+                <label htmlFor="hasCoin">持ってる</label>
+              </div>
               </>
             )}
 
-
+{/* 
             <form onSubmit={handleSubmit(submit)}>
               <input type="text" {...register('test')} />
               <button type="submit">送信</button>
-            </form>
+            </form> */}
            
             
-            <button className={styles.coinRegister} onClick={closeCoin}>登録</button>
+            {/* <button className={styles.coinRegister} onClick={closeCoin}>登録</button> */}
           </div>
         </div>
       ) : (
