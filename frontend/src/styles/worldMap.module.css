@@ -1,4 +1,10 @@
 .worldMap {
   position: absolute;
   top: 10%;
+  left: 10%
+}
+
+.gatherPoint {
+  font-size: 30px;
+  text-align: center;
 }

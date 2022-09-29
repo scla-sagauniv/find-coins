@@ -1,69 +1,71 @@
-import styles from '../styles/Home.module.css';
-import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
-import { useRouter } from 'next/router'
-import { useState,useEffect } from 'react';
-import firebaseApp from '../firebase/firebase';
+import styles from "../styles/Home.module.css";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import firebaseApp from "../firebase/firebase";
 
+const Login = () => {
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
 
-const Login=()=> {
+  //firebaseの取得
+  const auth = getAuth(firebaseApp);
 
-    const [loginEmail, setLoginEmail] = useState('');
-    const [loginPassword, setLoginPassword] = useState('');
+  //Routerをインスタンス化
+  const router = useRouter();
 
-    //firebaseの取得
-    const auth = getAuth(firebaseApp);
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
 
+    try {
+      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+      console.log(loginEmail, loginPassword);
 
-    //Routerをインスタンス化
-    const router = useRouter();
-
-    const handleSubmit = async (e:any) => {
-        e.preventDefault();
-    
-        try {
-          await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-          console.log(loginEmail,loginPassword)
-
-          //世界地図画面に遷移
-          router.push({
-            pathname: "/worldMap",
-            // query: { user_email:loginEmail } // ココ
-          });
-
-          
-        } catch (error) {
-          console.log(error)
-          alert("メールアドレスかパスワードが間違っています")
-        }
-    };
-
-    const handleClick = () =>{
+      //世界地図画面に遷移
       router.push({
-        pathname: "/register"
-        
+        pathname: "/worldMap",
+        // query: { user_email:loginEmail } // ココ
       });
+    } catch (error) {
+      console.log(error);
+      alert("メールアドレスかパスワードが間違っています");
     }
+  };
 
-      
-  
-    return (
+  const handleClick = () => {
+    router.push({
+      pathname: "/register",
+    });
+  };
 
-        <>
-        <h1>トップページ</h1>
-
-        <form onSubmit={handleSubmit}>
-          <div className={styles.container}>
-    
-            <input type="email" onChange={(e) => setLoginEmail(e.target.value)}/>
-            <input type="password" onChange={(e) => setLoginPassword(e.target.value)}/>
-            
-          </div>
-        </form>
-
-        <button type="submit">送信</button>
-        <button type='button' onClick={handleClick}>新規登録</button>
-      </>
-    )
-  }
+  return (
+    <>
+      <div className={styles.loginpage}>
+        <div className={styles.form}>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="email address"
+              onChange={(e) => setLoginEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="password"
+              onChange={(e) => setLoginPassword(e.target.value)}
+            />
+            <button>login</button>
+            <p className={styles.message}>
+              Already registered? <a onClick={handleClick}>Sign In</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default Login;

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useId } from "react";
-import Script from "next/script";
+import { useRouter } from "next/router";
 import Coin  from "../components/Coin"
 import style from "../styles/worldMap.module.css"
-import Head from "next/head";
 import firebaseApp from "../firebase/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 export const WorldMap = () => {
   const [showcoin, setShowCoin] = useState(false);
@@ -13,6 +13,8 @@ export const WorldMap = () => {
   const [gatherPoint, setGatherPoint] = useState(0);
 
   const auth = getAuth(firebaseApp);
+
+  const router = useRouter();
 
   const user = auth.currentUser;
   if (user !== null) {
@@ -24,9 +26,7 @@ export const WorldMap = () => {
     //ユーザのuidを取得する
     const uid = user.uid;
     console.log(uid);
-    
   }
-  
   useEffect(() => {
     google.load("visualization", "1", { packages: ["geochart"] });
     google.setOnLoadCallback(drawRegionsMap);
@@ -81,18 +81,31 @@ export const WorldMap = () => {
       }
     }
   }
- 
+
+  const moveLoginPage = () => {
+    router.push({
+      pathname: "./",
+    });
+  };
+
   if (user==null){
-    return <></>
+    return (
+      <>
+      <div className={style.gatherPoint}>集めたコインの数：{gatherPoint} / 196
+      </div>
+        <div className={style.worldMap} id="chart_div" style={{ width: "900px", height: "500px" }}></div>
+        <Coin showcoin={showcoin}  setShowCoin={setShowCoin} country={country} colorCodingCountry={colorCodingCountry} countryData={countryData} />
+      </>
+    )
   }
   return (
     <>
-    <div>集めたコインの数：{gatherPoint} / 196
+    <div className={style.gatherPoint}>集めたコインの数：{gatherPoint} / 196
     </div>
       <div className={style.worldMap} id="chart_div" style={{ width: "900px", height: "500px" }}></div>
       <Coin showcoin={showcoin}  setShowCoin={setShowCoin} country={country} colorCodingCountry={colorCodingCountry} countryData={countryData} userid={user.uid}/>
     </>
   );
-};
+}
 
 export default WorldMap;
