@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import React from 'react';
 import { useState } from "react";
+import style from "../styles/Coin.module.css";
 import styles from '../css/Coin.module.css'
 import { useForm } from 'react-hook-form';
 import { collection, addDoc,setDoc,doc } from "firebase/firestore";
@@ -13,11 +14,6 @@ const Coin = (props: any) => {
 
   const { register, handleSubmit } = useForm();
   
-  const closeCoin = () => {
-    props.setShowCoin(false);
-  };
-
-
   const dataRegister =(data:any)=>{
 
   }
@@ -26,7 +22,6 @@ const Coin = (props: any) => {
     console.log(data)
   }
  
-
   const overlay = {
     position: "fixed",
     top: 0,
@@ -46,6 +41,17 @@ const Coin = (props: any) => {
     borderRadius: "3px",
   };
 
+  const closeCoin = () => {
+    props.setShowCoin(false);
+  };
+
+  const addCountry = () => {
+    props.colorCodingCountry();
+    closeCoin();
+  };
+
+  props.countryData.find((data: any) => data[0] === props.country);
+
   return (
     <>
       {props.showcoin ? ( // showFlagがtrueだったらModalを表示する
@@ -63,6 +69,47 @@ const Coin = (props: any) => {
                 height="300px"
               />
             </div>
+            <div className={style.closeModal} onClick={closeCoin}></div>
+            {props.countryData.find(
+              (data: any) => data[0] === props.country
+            ) ? (
+              <>
+                <input
+                  id="hasNotCoin"
+                  type="radio"
+                  name="hasCoinChecked"
+                  onClick={addCountry}
+                />
+                <label for="hasNotCoin">持ってない</label>
+                <input
+                  id="hasCoin"
+                  type="radio"
+                  name="hasCoinChecked"
+                  defaultChecked
+                  onClick={addCountry}
+                />
+                <label for="hasCoin">持ってる</label>
+              </>
+            ) : (
+              <>
+                <input
+                  id="hasNotCoin"
+                  type="radio"
+                  name="hasCoinChecked"
+                  defaultChecked
+                  onClick={addCountry}
+                />
+                <label for="hasNotCoin">持ってない</label>
+                <input
+                  id="hasCoin"
+                  type="radio"
+                  name="hasCoinChecked"
+                  onClick={addCountry}
+                />
+                <label for="hasCoin">持ってる</label>
+              </>
+            )}
+
 
             <form onSubmit={handleSubmit(submit)}>
               <input type="hidden" value={props.userid} {...register('userid')} />
