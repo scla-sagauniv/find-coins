@@ -119,7 +119,8 @@ const Coin = (props: any) => {
 
 {/* 
             <form onSubmit={handleSubmit(submit)}>
-              <input type="text" {...register('test')} />
+              <input type="hidden" value={props.userid} {...register('userid')} />
+              <input type="text" defaultValue={props.country} {...register('countryname')}/>
               <button type="submit">送信</button>
             </form> */}
            
