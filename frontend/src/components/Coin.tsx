@@ -69,7 +69,6 @@ const Coin = (props: any) => {
                 height="300px"
               />
             </div>
-            <div className={style.closeModal} onClick={closeCoin}></div>
             {props.countryData.find(
               (data: any) => data[0] === props.country
             ) ? (
