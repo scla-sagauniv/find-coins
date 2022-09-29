@@ -13,8 +13,6 @@ const Login=()=> {
     //firebaseの取得
     const auth = getAuth(firebaseApp);
 
-
-    //Routerをインスタンス化
     const router = useRouter();
 
     const handleSubmit = async (e:any) => {
@@ -23,47 +21,34 @@ const Login=()=> {
         try {
           await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
           console.log(loginEmail,loginPassword)
-
-          //世界地図画面に遷移
           router.push({
-            pathname: "/worldMap",
+            pathname: "/test"
             // query: { user_email:loginEmail } // ココ
           });
-
           
+
         } catch (error) {
           console.log(error)
-          alert("メールアドレスかパスワードが間違っています")
         }
-    };
-
-    const handleClick = () =>{
-      router.push({
-        pathname: "/register"
-        
-      });
-    }
-
-      
+      };
   
     return (
 
         <>
-        <h1>トップページ</h1>
+        <h1>Googleログイン</h1>
 
-        <form onSubmit={handleSubmit}>
-          <div className={styles.container}>
-    
+        <form onClick={handleSubmit}>
+            <div className={styles.container}>
+            
             <input type="email" onChange={(e) => setLoginEmail(e.target.value)}/>
             <input type="password" onChange={(e) => setLoginPassword(e.target.value)}/>
-            
-          </div>
+            <button type="submit">送信</button>
+            </div>
         </form>
-
-        <button type="submit">送信</button>
-        <button type='button' onClick={handleClick}>新規登録</button>
       </>
     )
   }
 
 export default Login;
+
+
